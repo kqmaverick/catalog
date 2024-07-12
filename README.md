@@ -1,3 +1,5 @@
+Last known copy of the TC Catalog, only should be used in a worst case scenario
+
 # catalog
 
 This is just the TrueNAS SCALE App Catalog.
