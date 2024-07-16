@@ -11,8 +11,8 @@
             "definitions/certificate",
             "definitions/interface"
         ],
-        "human_version": "1.8.1_10.0.8",
-        "version": "10.0.8",
+        "human_version": "1.9.2_10.0.9",
+        "version": "10.0.9",
         "chart_metadata": {
             "annotations": {
                 "truecharts.org/category": "media",
@@ -21,7 +21,7 @@
                 "truecharts.org/train": "stable"
             },
             "apiVersion": "v2",
-            "appVersion": "1.8.1",
+            "appVersion": "1.9.2",
             "dependencies": [
                 {
                     "name": "common",
@@ -55,7 +55,7 @@
                 "https://hub.docker.com/r/fallenbagel/jellyseerr"
             ],
             "type": "application",
-            "version": "10.0.8"
+            "version": "10.0.9"
         },
         "app_metadata": null,
         "schema": {
