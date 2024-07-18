@@ -1,6 +1,8 @@
-Last known copy of the TC Catalog, only should be used in a worst case scenario
+# Steven's Fork of the TC catalog
 
-# catalog
+Don't use this, made it for personal use, not responsible, not changing anything but upstream images used ever
+
+Edit: Updated the images of a few apps I used, without modifying anything else, and keeping the last known common version for SCALE. If people want to use the Helm Charts please visit [TrueCharts](https://github.com/truecharts/charts)
 
 This is just the TrueNAS SCALE App Catalog.
 It's not being maintained anymore, as iX-Systems, in all their "wisdom" decided to sunset/deprecate TrueNAS SCALE Apps based on kubernets/helm.
