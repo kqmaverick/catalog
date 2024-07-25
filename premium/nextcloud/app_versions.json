@@ -3,7 +3,7 @@
         "healthy": true,
         "supported": true,
         "healthy_error": null,
-        "location": "/home/runner/_work/catalog/catalog/premium/nextcloud/30.1.24",
+        "location": "/home/runner/_work/catalog/catalog/premium/nextcloud/30.1.25",
         "last_update": "2024-07-24 12:35:14",
         "required_features": [
             "definitions/timezone",
