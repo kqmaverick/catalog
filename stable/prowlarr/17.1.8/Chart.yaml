@@ -34,4 +34,4 @@ sources:
   - https://github.com/k8s-at-home/container-images
   - https://github.com/truecharts/charts/tree/master/charts/stable/prowlarr
 type: application
-version: 17.1.7
+version: 17.1.8
