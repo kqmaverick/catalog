@@ -3,7 +3,7 @@
         "healthy": true,
         "supported": true,
         "healthy_error": null,
-        "location": "/home/runner/_work/catalog/catalog/stable/plextraktsync/8.1.11",
+        "location": "/home/runner/_work/catalog/catalog/stable/plextraktsync/8.1.13",
         "last_update": "2024-09-10 12:35:14",
         "required_features": [
             "definitions/timezone",
