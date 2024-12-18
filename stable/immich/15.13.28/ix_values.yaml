@@ -1,0 +1,150 @@
+image:
+  repository: ghcr.io/immich-app/immich-server
+  tag: v1.123.0@sha256:666ce77995230ff7327da5d285c861895576977237de08564e3c3ddf842877eb
+  pullPolicy: IfNotPresent
+
+mlImage:
+  repository: ghcr.io/immich-app/immich-machine-learning
+  pullPolicy: IfNotPresent
+  tag: v1.123.0@sha256:fca90362ff3081fc7762d731eb24de262181eaec28afc51eff1d3ca5348663cd
+
+mlCudaImage:
+  repository: ghcr.io/immich-app/immich-machine-learning
+  pullPolicy: IfNotPresent
+  tag: v1.123.0-cuda@sha256:c6ac56b2147dc716c4813c14ffc66b3aa91b0e1aaa74493a3a77d97cf4a98d7a
+
+mlOpenvinoImage:
+  repository: ghcr.io/immich-app/immich-machine-learning
+  pullPolicy: IfNotPresent
+  tag: v1.123.0-openvino@sha256:a1d919be9427ab3a6f26ebf63dd132a539e766ab7bac64200e5d187ca3fba068
+
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+
+immich:
+  enable_ml: true
+  mlImageType: mlImage
+  log_level: log
+
+service:
+  main:
+    # Main service targets the server
+    targetSelector: main
+    ports:
+      main:
+        port: 10323
+        protocol: http
+        targetSelector: main
+  microservices:
+    enabled: true
+    type: ClusterIP
+    targetSelector: microservices
+    ports:
+      microservices:
+        enabled: true
+        primary: true
+        port: 10004
+        protocol: http
+        targetSelector: microservices
+  machinelearning:
+    enabled: true
+    type: ClusterIP
+    targetSelector: machinelearning
+    ports:
+      machinelearning:
+        enabled: true
+        primary: true
+        port: 10003
+        protocol: http
+        targetSelector: machinelearning
+
+persistence:
+  mlcache:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      machinelearning:
+        machinelearning:
+          mountPath: /mlcache
+  microcache:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      microservices:
+        microservices:
+          mountPath: /microcache
+  library:
+    enabled: true
+    mountPath: /usr/src/app/upload/library
+    targetSelector:
+      # Main pod/container is server
+      main:
+        main: {}
+      microservices:
+        microservices: {}
+  uploads:
+    enabled: true
+    mountPath: /usr/src/app/upload/upload
+    targetSelector:
+      # Main pod/container is server
+      main:
+        main: {}
+      microservices:
+        microservices: {}
+  thumbs:
+    enabled: true
+    mountPath: /usr/src/app/upload/thumbs
+    targetSelector:
+      # Main pod/container is server
+      main:
+        main: {}
+      microservices:
+        microservices: {}
+  profile:
+    enabled: true
+    mountPath: /usr/src/app/upload/profile
+    targetSelector:
+      # Main pod/container is server
+      main:
+        main: {}
+      microservices:
+        microservices: {}
+  video:
+    enabled: true
+    mountPath: /usr/src/app/upload/encoded-video
+    targetSelector:
+      # Main pod/container is server
+      main:
+        main: {}
+      microservices:
+        microservices: {}
+
+cnpg:
+  main:
+    enabled: true
+    user: immich
+    database: immich
+    type: vectors
+    cluster:
+      initdb:
+        postInitApplicationSQL:
+          - CREATE EXTENSION IF NOT EXISTS cube;
+          - CREATE EXTENSION IF NOT EXISTS earthdistance;
+          - CREATE SCHEMA IF NOT EXISTS vectors;
+          - ALTER DATABASE immich SET search_path TO "immich", public, vectors;
+          - SET search_path TO "immich", public, vectors;
+          - GRANT SELECT ON TABLE pg_vector_index_stat TO PUBLIC;
+          - ALTER SCHEMA vectors OWNER TO immich;
+
+redis:
+  enabled: true
+  includeCommon: true
+  redisUsername: default
+
+portal:
+  open:
+    enabled: true
