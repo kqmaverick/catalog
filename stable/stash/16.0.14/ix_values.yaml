@@ -1,0 +1,48 @@
+image:
+  repository: docker.io/stashapp/stash
+  tag: v0.31.0@sha256:422b4d2a580e9f52c361264c3003f46a6ae9b7de76e6d08df091f104e90d8fa4
+  pullPolicy: IfNotPresent
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
+service:
+  main:
+    ports:
+      main:
+        port: 9999
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            STASH_PORT: "{{ .Values.service.main.ports.main.port }}"
+            STASH_STASH: /data
+            STASH_GENERATED: /generated
+            STASH_METADATA: /metadata
+            STASH_CACHE: /cache
+persistence:
+  config:
+    enabled: true
+    mountPath: "/root/.stash"
+  cache:
+    enabled: true
+    mountPath: "/cache"
+  generated:
+    enabled: true
+    mountPath: "/generated"
+  metadata:
+    enabled: true
+    mountPath: "/metadata"
+  blobs:
+    enabled: true
+    mountPath: "/blobs"
+  data:
+    enabled: true
+    mountPath: "/data"
+portal:
+  open:
+    enabled: true
