@@ -4,7 +4,7 @@
         "supported": true,
         "healthy_error": null,
         "location": "/home/runner/_work/catalog/catalog/premium/traefik/27.0.15",
-        "last_update": "2026-10-07 12:35:14",
+        "last_update": "2026-10-08 01:00:00",
         "required_features": [
             "definitions/timezone",
             "definitions/certificate"
@@ -2552,6 +2552,32 @@
                                                     {
                                                         "value": "ClusterIP",
                                                         "description": "ClusterIP (Do Not Expose Ports)"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "variable": "externalTrafficPolicy",
+                                            "label": "External Traffic Policy",
+                                            "description": "Controls source IP preservation for the LoadBalancer service.",
+                                            "schema": {
+                                                "show_if": [
+                                                    [
+                                                        "type",
+                                                        "=",
+                                                        "LoadBalancer"
+                                                    ]
+                                                ],
+                                                "type": "string",
+                                                "default": "Local",
+                                                "enum": [
+                                                    {
+                                                        "value": "Cluster",
+                                                        "description": "Cluster"
+                                                    },
+                                                    {
+                                                        "value": "Local",
+                                                        "description": "Local (Preserve Client IP)"
                                                     }
                                                 ]
                                             }

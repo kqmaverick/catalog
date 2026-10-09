@@ -1700,6 +1700,18 @@ questions:
                     - value: ClusterIP
                       description: ClusterIP (Do Not Expose Ports)
 
+              - variable: externalTrafficPolicy
+                label: External Traffic Policy
+                description: Controls source IP preservation for the LoadBalancer service.
+                schema:
+                  show_if: [["type", "=", "LoadBalancer"]]
+                  type: string
+                  default: Local
+                  enum:
+                    - value: Cluster
+                      description: Cluster
+                    - value: Local
+                      description: Local (Preserve Client IP)
               - variable: loadBalancerIP
                 label: LoadBalancer IP
                 description: "MetalLB Only: Selects the Loadbalancer IP to expose on. Required when using PortalButton with MetalLB"
