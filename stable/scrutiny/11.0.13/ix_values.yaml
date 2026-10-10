@@ -1,0 +1,57 @@
+image:
+  repository: ghcr.io/starosdev/scrutiny
+  pullPolicy: IfNotPresent
+  tag: 1.76.4-omnibus@sha256:0ca3553d2ec494d5ece1852a6905cc91aabc454c1f3e8362db4c1f5b2447ed6e
+service:
+  main:
+    ports:
+      main:
+        targetPort: 8080
+        port: 10151
+persistence:
+  varrun:
+    enabled: true
+  config:
+    enabled: true
+    mountPath: "/opt/scrutiny/config"
+  influxdb:
+    enabled: true
+    mountPath: "/opt/scrutiny/influxdb"
+  udev:
+    enabled: true
+    type: hostPath
+    hostPath: "/run/udev"
+    mountPath: "/run/udev"
+    readOnly: true
+portal:
+  open:
+    enabled: true
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    privileged: true
+    allowPrivilegeEscalation: true
+    capabilities:
+      # RawIO is for HDDs
+      # SYS_ADMIN is for NVMEs
+      add:
+        - SYS_RAWIO
+        - SYS_ADMIN
+    runAsUser: 0
+    runAsGroup: 0
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              path: "/api/health"
+            readiness:
+              path: "/api/health"
+            startup:
+              path: "/api/health"
+          env:
+            COLLECTOR_CRON_SCHEDULE: "0 0 * * *"
+            COLLECTOR_HOST_ID: "TrueNAS"
