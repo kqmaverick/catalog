@@ -1,0 +1,65 @@
+image:
+  repository: ghcr.io/browserless/chromium
+  tag: v2.57.0@sha256:6bac628b3d8293f8fb251d3a6b63030dfc5a1cb0c7e5c39abe5efd8f4b25360b
+  pullPolicy: IfNotPresent
+puppeteerImage:
+  repository: ghcr.io/browserless/chromium
+  pullPolicy: IfNotPresent
+  tag: v2.57.0@sha256:6bac628b3d8293f8fb251d3a6b63030dfc5a1cb0c7e5c39abe5efd8f4b25360b
+service:
+  main:
+    ports:
+      main:
+        port: 10194
+        protocol: http
+        targetPort: 3000
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          imageSelector: "image"
+          probes:
+            liveness:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+            readiness:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+            startup:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+          env:
+            WORKSPACE_DIR: "/downloads"
+            METRICS_JSON_PATH: "/metrics/metrics-v2.json"
+            # User Defined
+
+            HOST: "0.0.0.0"
+            EXTERNAL: ""
+            MAX_CONCURRENT_SESSIONS: 5
+            MAX_QUEUE_LENGTH: 5
+            CONNECTION_TIMEOUT: 30000
+            ENABLE_API_GET: true
+            ENABLE_DEBUGGER: true
+            ENABLE_CORS: false
+            TOKEN: ""
+persistence:
+  downloads:
+    enabled: true
+    mountPath: /downloads
+  metrics:
+    enabled: true
+    mountPath: /metrics
+portal:
+  open:
+    enabled: true
+updated: true
