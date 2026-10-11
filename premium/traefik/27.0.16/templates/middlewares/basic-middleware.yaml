@@ -37,7 +37,7 @@ spec:
     # stsPreload: false
     forceSTSHeader: true
     contentTypeNosniff: true
-    browserXssFilter: true
+    browserXssFilter: false
     referrerPolicy: same-origin
     customRequestHeaders:
       X-Forwarded-Proto: "https"
