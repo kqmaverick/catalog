@@ -1,0 +1,54 @@
+{{/* Make sure all variables are set properly */}}
+{{- include "tc.v1.common.loader.init" . -}}
+
+{{/* Preserve the existing SCALE form value while using Sonarr 5 option names. */}}
+{{- $env := .Values.workload.main.podSpec.containers.main.env -}}
+{{- $method := get $env "SONARR__AUTH__METHOD" | default (get $env "SONARR__AUTHENTICATION_METHOD") | default "" -}}
+{{- $_ := unset $env "SONARR__AUTHENTICATION_METHOD" -}}
+{{- $_ := unset $env "SONARR__PORT" -}}
+{{- if eq $method "Basic" -}}
+  {{- $method = "Forms" -}}
+{{- end -}}
+{{- if $method -}}
+  {{- $_ := set $env "SONARR__AUTH__METHOD" $method -}}
+{{- else -}}
+  {{- $_ := unset $env "SONARR__AUTH__METHOD" -}}
+{{- end -}}
+
+{{/* Native OIDC is opt-in and takes precedence over legacy auth overrides. */}}
+{{- $oidc := .Values.sonarr.oidc -}}
+{{- if $oidc.enabled -}}
+  {{- if not (hasPrefix "https://" $oidc.authority) -}}
+    {{- fail "Sonarr OIDC authority must use https://." -}}
+  {{- end -}}
+  {{- if or (not $oidc.client_id) (not $oidc.user_identifier) -}}
+    {{- fail "Sonarr OIDC requires a client ID and authorized verified email or subject." -}}
+  {{- end -}}
+  {{- if or (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" $oidc.client_secret_name)) (gt (len $oidc.client_secret_name) 253) -}}
+    {{- fail "Sonarr OIDC requires a valid existing Kubernetes Secret name." -}}
+  {{- end -}}
+  {{- if not (regexMatch "^[-._a-zA-Z0-9]+$" $oidc.client_secret_key) -}}
+    {{- fail "Sonarr OIDC requires a nonempty valid Secret key." -}}
+  {{- end -}}
+  {{- if not (has "openid" (regexSplit "[ ,]+" $oidc.scopes -1)) -}}
+    {{- fail "Sonarr OIDC scopes must include openid." -}}
+  {{- end -}}
+  {{/* Clear the obsolete auth-enabled switch which otherwise forces Forms. */}}
+  {{- $_ := set $env "SONARR__AUTH__ENABLED" "false" -}}
+  {{- $_ := set $env "SONARR__AUTH__METHOD" "Oidc" -}}
+  {{- $_ := set $env "SONARR__AUTH__REQUIRED" "Enabled" -}}
+  {{- $_ := set $env "SONARR__AUTH__OIDCAUTHORITY" $oidc.authority -}}
+  {{- $_ := set $env "SONARR__AUTH__OIDCCLIENTID" $oidc.client_id -}}
+  {{- $_ := set $env "SONARR__AUTH__OIDCUSERIDENTIFIER" $oidc.user_identifier -}}
+  {{- $_ := set $env "SONARR__AUTH__OIDCSCOPES" $oidc.scopes -}}
+  {{- $_ := set $env "SONARR__AUTH__OIDCCLIENTSECRET" (dict "secretKeyRef" (dict "expandObjectName" false "name" $oidc.client_secret_name "key" $oidc.client_secret_key)) -}}
+{{- end -}}
+
+{{/* Disable [exportarr] if requested */}}
+{{- if not .Values.metrics.main.enabled -}}
+  {{- $_ := set .Values.workload.exportarr "enabled" false -}}
+  {{- $_ := set .Values.service.metrics "enabled" false -}}
+{{- end -}}
+
+{{/* Render the templates */}}
+{{- include "tc.v1.common.loader.apply" . -}}
