@@ -704,7 +704,7 @@
     },
     "premium": {
         "authelia": {
-            "app_readme": "<p>Authelia is a Single Sign-On Multi-Factor portal for web apps</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/authelia\">https://truecharts.org/charts/premium/authelia</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 16 minor update: 16.3 to 16.15.</strong> Uses the tested, digest-pinned system-bookworm image with native Barman S3 support. Authelia remains 4.39.28. Existing authentication, OIDC/PAR settings, app/init images, credentials and data/WAL storage are preserved. Authelia, Redis and PostgreSQL pods restart during the update. NAS configured-values server dry runs and private recovery preparation, database TLS and application HTTP health checks passed. VM S3/WAL restores passed; production-data restore and end-to-end login remain untested.</p><p>Authelia is a Single Sign-On Multi-Factor portal for web apps</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/authelia\">https://truecharts.org/charts/premium/authelia</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "security"
             ],
@@ -713,10 +713,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/premium/authelia",
             "location": "/home/runner/_work/catalog/catalog/premium/authelia",
-            "latest_version": "24.1.11",
+            "latest_version": "24.1.12",
             "latest_app_version": "4.39.28",
-            "latest_human_version": "4.39.28_24.1.11",
-            "last_update": "2026-10-15 01:26:47",
+            "latest_human_version": "4.39.28_24.1.12",
+            "last_update": "2026-10-17 21:58:11",
             "name": "authelia",
             "recommended": false,
             "title": "Authelia",
