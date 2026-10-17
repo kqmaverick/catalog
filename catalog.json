@@ -738,7 +738,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/authelia.webp"
         },
         "blocky": {
-            "app_readme": "<p>Blocky is a DNS proxy, DNS enhancer and ad-blocker for the local network written in Go</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/blocky\">https://truecharts.org/charts/premium/blocky</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 16 minor update: 16.3 to 16.15.</strong> Uses the tested digest-pinned system-bookworm image with native Barman S3 support. Blocky remains 0.35.0. Updating this chart restarts Blocky, Redis and the single-instance database. VM ZFS upgrade and old/new S3 backup/WAL restores passed. NAS configured-values server dry runs and private backup/cache/TLS/DNS preparation passed. Production-data restore remains untested.</p><p>Blocky is a DNS proxy, DNS enhancer and ad-blocker for the local network written in Go</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/blocky\">https://truecharts.org/charts/premium/blocky</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "network"
             ],
@@ -747,10 +747,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/premium/blocky",
             "location": "/home/runner/_work/catalog/catalog/premium/blocky",
-            "latest_version": "15.2.4",
+            "latest_version": "15.2.5",
             "latest_app_version": "0.35.0",
-            "latest_human_version": "0.35.0_15.2.4",
-            "last_update": "2026-10-11 17:49:45",
+            "latest_human_version": "0.35.0_15.2.5",
+            "last_update": "2026-10-17 20:29:12",
             "name": "blocky",
             "recommended": false,
             "title": "Blocky",
