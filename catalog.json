@@ -25509,7 +25509,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/cert-manager.webp"
         },
         "cloudnative-pg": {
-            "app_readme": "<p>CloudNativePG is a clustered postgresql database operator</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/system/cloudnative-pg\">https://truecharts.org/charts/system/cloudnative-pg</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>Unofficial Kubernetes 1.26 compatibility fork for TrueNAS SCALE 24.04.</strong> The stock upstream chart requires Kubernetes 1.29 or later. VM upgrade, ZFS/S3/WAL restore and reboot tests passed; NAS values rendering and Helm server dry-run passed. This does not establish upstream support. Updating the operator restarts the seven single-instance database pods; PostgreSQL stays at its configured 15.7 or 16.3 version.</p>",
             "categories": [
                 "operators"
             ],
@@ -25518,10 +25518,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/system/cloudnative-pg",
             "location": "/home/runner/_work/catalog/catalog/system/cloudnative-pg",
-            "latest_version": "7.0.5",
-            "latest_app_version": "latest",
-            "latest_human_version": "latest_7.0.5",
-            "last_update": "2024-05-29 12:35:14",
+            "latest_version": "7.0.6",
+            "latest_app_version": "1.30.1",
+            "latest_human_version": "1.30.1_7.0.6",
+            "last_update": "2026-10-17 00:10:02",
             "name": "cloudnative-pg",
             "recommended": false,
             "title": "Cloudnative-pg",
