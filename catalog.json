@@ -9846,7 +9846,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/homarr.webp"
         },
         "home-assistant": {
-            "app_readme": "<p>home-assistant App for TrueNAS SCALE</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/home-assistant\">https://truecharts.org/charts/stable/home-assistant</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 16 minor update: 16.3 to 16.15.</strong> Uses the tested, digest-pinned system-bookworm image with native Barman S3 support. Home Assistant remains 2026.10.1. An existing HACS directory is preserved on startup, including when the old init script is retained in configured Helm values. App/init images, recorder and networking settings, credentials and data/WAL storage are preserved. Home Assistant (including its code-server sidecar) and PostgreSQL pods restart. NAS configured-values dry runs, HACS shell fixtures, private database/configuration recovery exports, database TLS and application HTTP health checks passed. VM S3/WAL restores passed; production-data restore and end-to-end Home Assistant operation remain untested.</p><p>home-assistant App for TrueNAS SCALE</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/home-assistant\">https://truecharts.org/charts/stable/home-assistant</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "home-automation"
             ],
@@ -9855,10 +9855,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/stable/home-assistant",
             "location": "/home/runner/_work/catalog/catalog/stable/home-assistant",
-            "latest_version": "25.1.28",
+            "latest_version": "25.1.29",
             "latest_app_version": "2026.10.1",
-            "latest_human_version": "2026.10.1_25.1.28",
-            "last_update": "2026-10-10 17:33:32",
+            "latest_human_version": "2026.10.1_25.1.29",
+            "last_update": "2026-10-17 23:17:08",
             "name": "home-assistant",
             "recommended": false,
             "title": "Home-assistant",
