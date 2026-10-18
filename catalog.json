@@ -1018,7 +1018,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/traefik.webp"
         },
         "vaultwarden": {
-            "app_readme": "<p>Unofficial Bitwarden compatible server written in Rust</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/vaultwarden\">https://truecharts.org/charts/premium/vaultwarden</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 15 minor update: 15.7 to 15.19.</strong> Vaultwarden stays at 1.37.4. Uses the NAS-tested, digest-pinned system-bookworm PostgreSQL image. Existing application/init images, settings, credentials and storage are preserved. Vaultwarden and PostgreSQL restart; expect temporary unavailability. NAS configured-values dry runs and private database/application recovery preparation passed, including RSA keys, configuration and the application ZFS binding. Production-data restore and vault login/sync remain separate checks.</p><p>Unofficial Bitwarden compatible server written in Rust</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/vaultwarden\">https://truecharts.org/charts/premium/vaultwarden</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "security"
             ],
@@ -1027,10 +1027,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/premium/vaultwarden",
             "location": "/home/runner/_work/catalog/catalog/premium/vaultwarden",
-            "latest_version": "27.1.18",
+            "latest_version": "27.1.19",
             "latest_app_version": "1.37.4",
-            "latest_human_version": "1.37.4_27.1.18",
-            "last_update": "2026-10-07 01:00:00",
+            "latest_human_version": "1.37.4_27.1.19",
+            "last_update": "2026-10-18 15:30:15",
             "name": "vaultwarden",
             "recommended": false,
             "title": "Vaultwarden",
