@@ -908,7 +908,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/metallb-config.webp"
         },
         "nextcloud": {
-            "app_readme": "<p>A private cloud server that puts the control and security of your own data back into your hands.</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/nextcloud\">https://truecharts.org/charts/premium/nextcloud</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 15 minor update: 15.7 to 15.19.</strong> Nextcloud stays at 35.0.2. The tested PostgreSQL image is pinned by digest. Existing application images, settings, credentials and storage are preserved. Nextcloud, enabled companion services, Redis and PostgreSQL restart during this update; expect temporary unavailability. NAS dry runs and recovery preparation passed. The private file archive excludes NFS uploaded data, which needs its own backup. Production-data restore remains untested.</p><p>A private cloud server that puts the control and security of your own data back into your hands.</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/premium/nextcloud\">https://truecharts.org/charts/premium/nextcloud</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "cloud"
             ],
@@ -917,10 +917,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/premium/nextcloud",
             "location": "/home/runner/_work/catalog/catalog/premium/nextcloud",
-            "latest_version": "31.0.24",
+            "latest_version": "31.0.25",
             "latest_app_version": "35.0.2",
-            "latest_human_version": "35.0.2_31.0.24",
-            "last_update": "2026-10-16 01:52:37",
+            "latest_human_version": "35.0.2_31.0.25",
+            "last_update": "2026-10-18 06:10:42",
             "name": "nextcloud",
             "recommended": false,
             "title": "Nextcloud",
