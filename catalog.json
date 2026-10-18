@@ -12280,7 +12280,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/llalon-github-backup.webp"
         },
         "lldap": {
-            "app_readme": "<p>Lightweight ldap server for authentication and user management</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/lldap\">https://truecharts.org/charts/stable/lldap</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 15 minor update: 15.7 to 15.19.</strong> Uses the tested, digest-pinned system-bookworm image with native Barman S3 support. LLDAP remains 0.6.3. The JWT Secret lookup, LDAP/admin/SMTP settings, application/init images, credentials, networking and data/WAL storage are preserved. LLDAP and PostgreSQL pods restart; LDAP authentication may be briefly unavailable. NAS configured-values dry runs, private database/application recovery exports, database TLS and application HTTP health checks passed. VM S3/WAL restores passed; production-data restore and LDAP bind/application login remain untested.</p><p>Lightweight ldap server for authentication and user management</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/lldap\">https://truecharts.org/charts/stable/lldap</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "ldap"
             ],
@@ -12289,10 +12289,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/stable/lldap",
             "location": "/home/runner/_work/catalog/catalog/stable/lldap",
-            "latest_version": "6.0.11",
+            "latest_version": "6.0.12",
             "latest_app_version": "0.6.3",
-            "latest_human_version": "0.6.3_6.0.11",
-            "last_update": "2026-10-09 19:00:53",
+            "latest_human_version": "0.6.3_6.0.12",
+            "last_update": "2026-10-18 03:53:00",
             "name": "lldap",
             "recommended": false,
             "title": "Lldap",
