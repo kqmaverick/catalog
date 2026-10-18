@@ -13011,7 +13011,7 @@
             "icon_url": "https://truecharts.org/img/hotlink-ok/chart-icons/memories-of-mars.webp"
         },
         "meshcentral": {
-            "app_readme": "<p>MeshCentral is a full computer management web site</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/meshcentral\">https://truecharts.org/charts/stable/meshcentral</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
+            "app_readme": "<p><strong>PostgreSQL 16 minor update: 16.3 to 16.15.</strong> Uses the tested, digest-pinned system-bookworm image with native Barman S3 support. MeshCentral remains 1.2.6. App/init images, server settings, session key, credentials, networking and data/WAL storage are preserved. MeshCentral and PostgreSQL pods restart; agent sessions may disconnect during restart. NAS configured-values dry runs, private database/application recovery exports, database TLS and application HTTP health checks passed. VM S3/WAL restores passed; production-data restore and end-to-end agent operation remain untested.</p><p>MeshCentral is a full computer management web site</p>\n<p>This App is supplied by TrueCharts, for more information visit the manual: <a href=\"https://truecharts.org/charts/stable/meshcentral\">https://truecharts.org/charts/stable/meshcentral</a></p>\n<hr />\n<p>TrueCharts can only exist due to the incredible effort of our staff.\nPlease consider making a <a href=\"https://truecharts.org/sponsor\">donation</a> or contributing back to the project any way you can!</p>",
             "categories": [
                 "cloud"
             ],
@@ -13020,10 +13020,10 @@
             "healthy_error": null,
             "home": "https://truecharts.org/charts/stable/meshcentral",
             "location": "/home/runner/_work/catalog/catalog/stable/meshcentral",
-            "latest_version": "16.0.27",
+            "latest_version": "16.0.28",
             "latest_app_version": "1.2.6",
-            "latest_human_version": "1.2.6_16.0.27",
-            "last_update": "2026-10-09 18:42:17",
+            "latest_human_version": "1.2.6_16.0.28",
+            "last_update": "2026-10-18 00:04:08",
             "name": "meshcentral",
             "recommended": false,
             "title": "Meshcentral",
