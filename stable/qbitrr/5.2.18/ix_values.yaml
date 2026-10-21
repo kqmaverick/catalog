@@ -1,0 +1,91 @@
+image:
+  repository: docker.io/feramance/qbitrr
+  pullPolicy: IfNotPresent
+  tag: v5.14.6-2@sha256:9a9ecded0b13f537233ebc405f5a0ddc5f4d0594500c5b4395308b0e58458aad
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+service:
+  main:
+    enabled: true
+    type: ClusterIP
+    ports:
+      main:
+        enabled: true
+        port: 6969
+        protocol: http
+        targetPort: 6969
+ingress:
+  main:
+    enabled: false
+    integrations:
+      traefik:
+        enabled: true
+        enableFixedMiddlewares: false
+        entrypoints:
+          - websecure
+        middlewares:
+          - name: chain-basic
+            namespace: ix-traefik
+          - name: auth
+            namespace: ix-traefik
+          - name: internal-only
+            namespace: ix-traefik
+workload:
+  main:
+    podSpec:
+      initContainers:
+        1-create-config-file:
+          type: install
+          enabled: true
+          imageSelector: "image"
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              set -eu
+              conf="/config/config.toml"
+              if [ -f "$conf" ]; then
+                echo "Existing configuration found; leaving it unchanged."
+              else
+                echo "Generating configuration with the installed qBitrr version."
+                cd /config
+                python -m qBitrr.main --gen-config
+                test -s "$conf"
+              fi
+      containers:
+        main:
+          command:
+            - /usr/bin/tini
+            - --
+            - python
+            - -m
+            - qBitrr.main
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          env:
+            QBITRR_OVERRIDES_DATA_PATH: /config
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+    targetSelector:
+      main:
+        main: {}
+        1-create-config-file: {}
+  downloads:
+    enabled: true
+    mountPath: /completed_downloads
+portal:
+  open:
+    enabled: false
+    path: /ui
