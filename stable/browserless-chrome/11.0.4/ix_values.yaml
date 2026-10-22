@@ -1,0 +1,105 @@
+image:
+  repository: ghcr.io/browserless/chromium
+  tag: v2.57.3@sha256:40dff7c23e0e378ba451c23ef66394ffb81bd11e6b9fe8ef3066d59eb402cc5d
+  pullPolicy: IfNotPresent
+puppeteerImage:
+  repository: ghcr.io/browserless/chromium
+  pullPolicy: IfNotPresent
+  tag: v2.57.3@sha256:40dff7c23e0e378ba451c23ef66394ffb81bd11e6b9fe8ef3066d59eb402cc5d
+service:
+  main:
+    ports:
+      main:
+        port: 10194
+        protocol: http
+        targetPort: 3000
+workload:
+  main:
+    podSpec:
+      initContainers:
+        prepare-identity:
+          enabled: true
+          type: init
+          imageSelector: image
+          command:
+          - node
+          args:
+          - -e
+          - "const fs = require('fs');\nconst uid = process.getuid();\nconst gid = process.getgid();\nconst home = '/tmp/browserless-home';\n\
+            \nfunction addMissingEntry(text, field, id, entry) {\n  const lines = text.trimEnd().split('\\n');\n  if (!lines.some(line\
+            \ => Number(line.split(':')[field]) === id)) {\n    lines.push(entry);\n  }\n  return lines.join('\\n') + '\\n';\n}\n\
+            \nconst passwd = addMissingEntry(\n  fs.readFileSync('/etc/passwd', 'utf8'), 2, uid,\n  `browserless-runtime-${uid}:x:${uid}:${gid}:Browserless:${home}:/usr/sbin/nologin`,\n\
+            );\nconst group = addMissingEntry(\n  fs.readFileSync('/etc/group', 'utf8'), 2, gid,\n  `browserless-runtime-${gid}:x:${gid}:`,\n\
+            );\n\nfs.writeFileSync('/identity-passwd/passwd', passwd, {mode: 0o644});\nfs.writeFileSync('/identity-group/group',\
+            \ group, {mode: 0o644});\nfs.mkdirSync(home, {recursive: true, mode: 0o700});\nfs.accessSync(home, fs.constants.W_OK);\n\
+            console.log(`Prepared Browserless account for UID ${uid}, GID ${gid}.`);\n"
+      containers:
+        main:
+          imageSelector: "image"
+          probes:
+            liveness:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+            readiness:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+            startup:
+              type: exec
+              command:
+                - node
+                - -e
+                - "const h=require(\"http\");const q=process.env.TOKEN?\"?token=\"+encodeURIComponent(process.env.TOKEN):\"\";const r=h.get({hostname:\"127.0.0.1\",port:3000,path:\"/metrics\"+q},s=>{s.resume();process.exit(s.statusCode===200?0:1)});r.setTimeout(4000,()=>{r.destroy();process.exit(1)});r.on(\"error\",()=>process.exit(1));"
+          env:
+            WORKSPACE_DIR: "/downloads"
+            METRICS_JSON_PATH: "/metrics/metrics-v2.json"
+            # User Defined
+
+            HOME: "/tmp/browserless-home"
+            HOST: "0.0.0.0"
+            EXTERNAL: ""
+            MAX_CONCURRENT_SESSIONS: 5
+            MAX_QUEUE_LENGTH: 5
+            CONNECTION_TIMEOUT: 30000
+            ENABLE_API_GET: true
+            ENABLE_DEBUGGER: true
+            ENABLE_CORS: false
+            TOKEN: ""
+persistence:
+  downloads:
+    enabled: true
+    mountPath: /downloads
+  metrics:
+    enabled: true
+    mountPath: /metrics
+  runtime-passwd:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      main:
+        main:
+          mountPath: /etc/passwd
+          subPath: passwd
+          readOnly: true
+        prepare-identity:
+          mountPath: /identity-passwd
+  runtime-group:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      main:
+        main:
+          mountPath: /etc/group
+          subPath: group
+          readOnly: true
+        prepare-identity:
+          mountPath: /identity-group
+portal:
+  open:
+    enabled: true
+updated: true
