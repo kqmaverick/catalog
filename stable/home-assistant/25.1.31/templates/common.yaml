@@ -1,0 +1,41 @@
+{{/* Make sure all variables are set properly */}}
+{{- include "tc.v1.common.loader.init" . }}
+
+{{/* TrueNAS may retain the init script in configured Helm values. Guard the
+     effective script after merging, so those saved values cannot restore the
+     unconditional HACS download. Leave the remainder of the script intact. */}}
+{{- $maps := (get .Values "configmap") | default dict -}}
+{{- $init := (get $maps "init") | default dict -}}
+{{- $data := (get $init "data") | default dict -}}
+{{- if hasKey $data "init.sh" -}}
+  {{- $script := index $data "init.sh" -}}
+  {{- $start := "echo \"Downloading HACS\"" -}}
+  {{- $end := "echo \"Installation complete.\"" -}}
+  {{- $message := "echo \"HACS directory already exists; preserving installed files.\"" -}}
+  {{- if not (kindIs "string" $script) -}}
+    {{- fail "Home Assistant init script must be a string" -}}
+  {{- end -}}
+  {{- $parts := splitList $start $script -}}
+  {{- if or (ne (len $parts) 2) (ne (len (splitList $end $script)) 2) (contains $message $script) -}}
+    {{- fail "Home Assistant HACS install block requires review before this update" -}}
+  {{- end -}}
+  {{- $prefix := index $parts 0 -}}
+  {{- $rest := splitList $end (index $parts 1) -}}
+  {{- if or (ne (len $rest) 2) (and (ne $prefix "") (not (hasSuffix "\n" $prefix))) -}}
+    {{- fail "Unexpected Home Assistant HACS install block layout" -}}
+  {{- end -}}
+  {{- $block := printf "%s%s%s" $start (index $rest 0) $end -}}
+  {{- $lines := list -}}
+  {{- range (splitList "\n" $block) -}}
+    {{- if eq . "" -}}
+      {{- $lines = append $lines "" -}}
+    {{- else -}}
+      {{- $lines = append $lines (printf "  %s" .) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $guarded := printf "if [ -d \"/config/custom_components/hacs\" ]; then\n  %s\nelse\n%s\nfi" $message (join "\n" $lines) -}}
+  {{- $_ := set $data "init.sh" (printf "%s%s%s" $prefix $guarded (index $rest 1)) -}}
+{{- end -}}
+
+{{/* Render the templates */}}
+{{ include "tc.v1.common.loader.apply" . }}
