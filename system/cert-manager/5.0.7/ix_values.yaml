@@ -1,0 +1,71 @@
+image:
+  repository: tccr.io/tccr/scratch
+  pullPolicy: IfNotPresent
+  tag: latest@sha256:4aef9dbf99ea2a8857ed4ce9d9bf79d330b79044884c7374e392445d122ec746
+service:
+  main:
+    enabled: false
+    ports:
+      main:
+        enabled: false
+workload:
+  main:
+    enabled: false
+portal:
+  open:
+    enabled: false
+operator:
+  register: true
+configmap:
+  dashboard:
+    enabled: true
+    labels:
+      grafana_dashboard: '1'
+    data:
+      cert-manager.json: '{{ .Files.Get "dashboard.json" | indent 8 }}'
+certmanager:
+  dns01RecursiveNameservers: 1.1.1.1:53,1.0.0.1:53
+  dns01RecursiveNameserversOnly: false
+  installCRDs: true
+  enableCertificateOwnerRef: true
+  prometheus:
+    enabled: true
+    servicemonitor:
+      enabled: true
+  crds:
+    enabled: false
+    keep: true
+  image:
+    repository: quay.io/jetstack/cert-manager-controller
+    registry: ''
+    tag: ''
+    digest: sha256:6e5c14c077b98bd68c856d204e52b6066c4600ebdb1367ad323c356f21af3924
+    pullPolicy: IfNotPresent
+  cainjector:
+    image:
+      repository: quay.io/jetstack/cert-manager-cainjector
+      registry: ''
+      tag: ''
+      digest: sha256:fca4653092651e1c41605ef470330de64e0c2fa9d07568c91118ecbc2eb73a04
+      pullPolicy: IfNotPresent
+  webhook:
+    image:
+      repository: quay.io/jetstack/cert-manager-webhook
+      registry: ''
+      tag: ''
+      digest: sha256:141302a189f6ba688eae6ba3e47fa05743fc27cdb90112cbc8531b89e8db8a9b
+      pullPolicy: IfNotPresent
+  acmesolver:
+    image:
+      repository: quay.io/jetstack/cert-manager-acmesolver
+      registry: ''
+      tag: ''
+      digest: sha256:311e4f467bc2d395be893062df333f7bfa56d9926071de4b1a7a776cdadf8db1
+      pullPolicy: IfNotPresent
+  startupapicheck:
+    image:
+      repository: quay.io/jetstack/cert-manager-startupapicheck
+      registry: ''
+      tag: ''
+      digest: sha256:d35b8ee060fa998e6902c825e7f64bb466196ed542830dcd5d773b9a71c9442b
+      pullPolicy: IfNotPresent
