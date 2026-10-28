@@ -1,0 +1,44 @@
+image:
+  repository: ghcr.io/hotio/whisparr
+  pullPolicy: IfNotPresent
+  tag: v3-3.6.5-release.1886@sha256:c21ee73285865bb89ccea37aa01bc403744bb2697898689aed03f24e85ff58cf
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
+service:
+  main:
+    ports:
+      main:
+        port: 6969
+        protocol: http
+        targetPort: 6969
+persistence:
+  config:
+    enabled: true
+    mountPath: /config
+portal:
+  open:
+    enabled: true
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              enabled: true
+              custom: false
+              type: http
+              path: /ping
+            readiness:
+              enabled: true
+              custom: false
+              type: http
+              path: /ping
+            startup:
+              enabled: true
+              custom: false
+              type: http
+              path: /ping

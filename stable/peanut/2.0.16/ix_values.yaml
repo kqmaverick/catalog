@@ -1,0 +1,45 @@
+image:
+  repository: brandawg93/peanut
+  tag: 6.1.2@sha256:b58b9627f77448f25e29f772870ee01f0f5a245c6ad7d6e0d7f620d1bb0fb623
+  pullPolicy: IfNotPresent
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsGroup: 0
+    runAsUser: 0
+service:
+  main:
+    ports:
+      main:
+        port: 10688
+portal:
+  open:
+    enabled: true
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: http
+              path: /api/ping
+            readiness:
+              type: http
+              path: /api/ping
+            startup:
+              type: http
+              path: /api/ping
+          env:
+            AUTH_DISABLED: true
+            NUT_HOST: "localhost"
+            NUT_PORT: 3493
+            USERNAME: ""
+            PASSWORD: ""
+            WEB_PORT: "{{ .Values.service.main.ports.main.port }}"
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    size: 1Gi
