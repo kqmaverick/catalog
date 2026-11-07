@@ -1,0 +1,23 @@
+image:
+  repository: ghcr.io/linuxserver/librespeed
+  tag: 6.3.1@sha256:16a2c6a6ba7d60d825d73c682ba3036ca3877fe34f73dab9c88854bc099e1164
+  pullPolicy: IfNotPresent
+service:
+  main:
+    ports:
+      main:
+        port: 10016
+        targetPort: 80
+persistence:
+  config:
+    enabled: true
+    mountPath: "/config"
+portal:
+  open:
+    enabled: true
+securityContext:
+  container:
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
