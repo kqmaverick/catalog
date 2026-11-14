@@ -1,0 +1,4 @@
+postgres16Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "16.16-202611122305-system-bookworm@sha256:0acc198c1ee2a17a52a2ec9d774ed21e8a8e3020e34818f802e87536bc312138"
+  pullPolicy: IfNotPresent

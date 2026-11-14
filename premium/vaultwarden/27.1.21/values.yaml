@@ -1,0 +1,4 @@
+postgres15Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: "15.20-202611122305-system-bookworm@sha256:24c58a7026676fd140e03b720a527d7bcf1837c042d4ea0ee50d5165d43d8c83"
+  pullPolicy: IfNotPresent
