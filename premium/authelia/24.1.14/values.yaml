@@ -1,0 +1,62 @@
+postgres16Image:
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: 16.16-202611122305-system-bookworm@sha256:0acc198c1ee2a17a52a2ec9d774ed21e8a8e3020e34818f802e87536bc312138
+  pullPolicy: IfNotPresent
+redis:
+  enabled: true
+  includeCommon: true
+  image:
+    repository: docker.io/bitnamisecure/redis
+    tag: latest@sha256:59078af5aec997137eb95f34fed376487b471e05c9a244c2812a13598c434950
+    pullPolicy: IfNotPresent
+  configmap:
+    health:
+      data:
+        ping_readiness_local.sh: '#!/bin/sh
+
+          set -eu
+
+          set +x
+
+          [ -n "${REDIS_PASSWORD:-}" ] || exit 1
+
+          REDISCLI_AUTH="$REDIS_PASSWORD"; export REDISCLI_AUTH
+
+          reply=$(timeout "${1:-2}" redis-cli --no-auth-warning -h 127.0.0.1 -p "${REDIS_PORT:-6379}" --raw PING 2>/dev/null) || exit 1
+
+          [ "$reply" = PONG ] && exit 0
+
+          printf ''%s\n'' ''Redis authenticated health check failed'' >&2
+
+          exit 1
+
+          '
+        ping_liveness_local.sh: '#!/bin/sh
+
+          set -eu
+
+          set +x
+
+          [ -n "${REDIS_PASSWORD:-}" ] || exit 1
+
+          REDISCLI_AUTH="$REDIS_PASSWORD"; export REDISCLI_AUTH
+
+          reply=$(timeout "${1:-2}" redis-cli --no-auth-warning -h 127.0.0.1 -p "${REDIS_PORT:-6379}" --raw PING 2>/dev/null) || exit 1
+
+          case "$reply" in PONG|LOADING*) exit 0 ;; esac
+
+          printf ''%s\n'' ''Redis authenticated health check failed'' >&2
+
+          exit 1
+
+          '
+  volumeClaimTemplates:
+    data:
+      enabled: false
+  persistence:
+    redis-runtime-data:
+      enabled: true
+      type: emptyDir
+      mountPath: /bitnami/redis
+      medium: ''
+      size: 1Gi
