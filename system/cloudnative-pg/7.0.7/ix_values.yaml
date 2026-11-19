@@ -1,0 +1,41 @@
+image:
+  repository: tccr.io/tccr/alpine
+  pullPolicy: IfNotPresent
+  tag: latest@sha256:ade0065e19edaa4f6903d464ee70605111a48394536deb94f31b661264704558
+service:
+  main:
+    enabled: false
+    ports:
+      main:
+        enabled: false
+workload:
+  main:
+    enabled: false
+portal:
+  open:
+    enabled: false
+operator:
+  register: true
+cloudnative-pg:
+  image:
+    tag: 1.30.2@sha256:f96f6be3d81ec93819b443c665c575c609342fca840df90d4d87dae314a5b913
+  monitoring:
+    podMonitorEnabled: true
+    grafanaDashboard:
+      create: true
+      namespace: ''
+      configMapName: cnpg-grafana-dashboard
+      sidecarLabel: grafana_dashboard
+      sidecarLabelValue: '1'
+  config:
+    data:
+      ENABLE_INSTANCE_MANAGER_INPLACE_UPDATES: 'false'
+  webhook:
+    startupProbe:
+      failureThreshold: 60
+      periodSeconds: 5
+      timeoutSeconds: 5
+    livenessProbe:
+      timeoutSeconds: 5
+    readinessProbe:
+      timeoutSeconds: 5
