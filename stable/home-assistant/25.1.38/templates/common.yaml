@@ -1,0 +1,24 @@
+{{- include "tc.v1.common.loader.init" . }}
+
+{{/* TrueNAS can carry the original init.sh forward in saved values. Remove
+     the exact legacy block after merging and preserve the rest of the script. */}}
+{{- $maps := (get .Values "configmap") | default dict -}}
+{{- $init := (get $maps "init") | default dict -}}
+{{- $data := (get $init "data") | default dict -}}
+{{- if hasKey $data "init.sh" -}}
+  {{- $script := index $data "init.sh" -}}
+  {{- if not (kindIs "string" $script) -}}
+    {{- fail "Home Assistant init script must be a string" -}}
+  {{- end -}}
+  {{- $legacy := "echo \"Downloading HACS\"\nwget \"https://github.com/hacs/integration/releases/latest/download/hacs.zip\" || exit 0\n\nif [ -d \"/config/custom_components/hacs\" ]; then\n  echo \"HACS directory already exist, cleaning up...\"\n  rm -R \"/config/custom_components/hacs\"\nfi\n\necho \"Creating HACS directory...\"\nmkdir -p \"/config/custom_components/hacs\"\n\necho \"Unpacking HACS...\"\nunzip \"/config/custom_components/hacs.zip\" -d \"/config/custom_components/hacs\" >/dev/null 2>&1\n\necho \"Removing HACS zip file...\"\nrm \"/config/custom_components/hacs.zip\"\necho \"Installation complete.\"" -}}
+  {{- if gt (len (splitList $legacy $script)) 2 -}}
+    {{- fail "Repeated Home Assistant HACS bootstrap requires review" -}}
+  {{- end -}}
+  {{- $script = replace $legacy "# Marketplace is built into Home Assistant." $script -}}
+  {{- if or (contains "hacs.zip" $script) (contains "hacs/integration/releases" $script) (contains "Downloading HACS" $script) -}}
+    {{- fail "Unrecognized Home Assistant HACS bootstrap requires review" -}}
+  {{- end -}}
+  {{- $_ := set $data "init.sh" $script -}}
+{{- end -}}
+
+{{ include "tc.v1.common.loader.apply" . }}
